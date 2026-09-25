@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!-- saved from url=(0130)http://127.0.0.1:38795/live-call-script-tool.html?openclaw_portal=6af27640a2f51e00e07df5b08f7a2a72c37bea00efa6578fa77a0451c4e87ceb -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Crestline Commerce — Live Call Script</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
+    background: #f4f5f7;
+    color: #1a1a2e;
+    margin: 0;
+    padding: 24px;
+  }
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 800px) {
+    .wrap { grid-template-columns: 1fr; }
+  }
+  h1 { font-size: 15pt; margin: 0 0 4px; }
+  .subtitle { font-size: 9pt; color: #666; margin-bottom: 18px; }
+
+  /* INPUT PANEL */
+  .panel {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    align-self: start;
+    position: sticky;
+    top: 24px;
+  }
+  .panel h2 {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin: 0 0 12px;
+  }
+  label {
+    display: block;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #444;
+    margin: 10px 0 3px;
+  }
+  label:first-of-type { margin-top: 0; }
+  input[type=text] {
+    width: 100%;
+    padding: 7px 9px;
+    font-size: 10pt;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+  }
+  input[type=text]:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76,175,80,0.15);
+  }
+  .clear-btn {
+    margin-top: 16px;
+    width: 100%;
+    padding: 8px;
+    background: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+  }
+  .clear-btn:hover { background: #e5e5e5; }
+
+  /* SCRIPT PANEL */
+  .script-panel {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 28px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .script-panel h2 {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin: 24px 0 14px;
+  }
+  .script-panel h2:first-of-type { margin-top: 0; }
+  .line {
+    background: #f7f9fb;
+    border-left: 3px solid #4CAF50;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 11.5pt;
+    line-height: 1.6;
+  }
+  .vm .line { border-left-color: #2f6f8f; }
+  .direction {
+    font-size: 9pt;
+    color: #999;
+    font-style: italic;
+    margin: 4px 0 12px 4px;
+  }
+  .filled { color: #0f2a3f; font-weight: 700; background: #eef8ee; padding: 0 3px; border-radius: 3px; }
+  .empty { color: #c00; font-weight: 700; background: #fdecec; padding: 0 3px; border-radius: 3px; }
+
+  .print-btn {
+    margin-top: 8px;
+    width: 100%;
+    padding: 9px 18px;
+    background: #1a1a2e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 9.5pt;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .wrap { grid-template-columns: 1fr; }
+    .panel { display: none; }
+  }
+</style>
+<script src="chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/js/recordConsoleEvents.js"></script></head>
+<body>
+
+<div class="wrap">
+
+  <!-- INPUT PANEL -->
+  <div class="panel">
+    <h2>Prospect Details</h2>
+
+    <label for="name">Decision Maker First Name</label>
+    <input type="text" id="name" placeholder="e.g. Louis">
+
+    <label for="company">Company Name</label>
+    <input type="text" id="company" placeholder="e.g. A1 Electric">
+
+    <label for="reviews">Google Review Count</label>
+    <input type="text" id="reviews" placeholder="e.g. 17">
+
+    <label for="rating">Star Rating</label>
+    <input type="text" id="rating" placeholder="e.g. 4.8">
+
+    <label for="lastreview">Last Review (relative)</label>
+    <input type="text" id="lastreview" placeholder="e.g. 2 months ago">
+
+    <label for="service">Service / Keyword</label>
+    <input type="text" id="service" placeholder="e.g. electrician">
+
+    <label for="city">City</label>
+    <input type="text" id="city" placeholder="e.g. Hackensack">
+
+    <label for="competitor">Top Competitor Name</label>
+    <input type="text" id="competitor" placeholder="e.g. First Choice Plumbing">
+
+    <label for="time">Callback Time</label>
+    <input type="text" id="time" placeholder="e.g. 4 or 4:30">
+
+    <button class="clear-btn" onclick="clearAll()">Clear All Fields</button>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <!-- SCRIPT PANEL -->
+  <div class="script-panel">
+    <h1>Cold Call Script</h1>
+    <div class="subtitle">Type prospect details on the left — the script below updates live.</div>
+
+    <h2>The Script</h2>
+
+    <div class="line">
+      Hey <span id="out-name" class="empty">[Name]</span>, it's Chris. I know I'm catching you out of the blue here, but can I grab 20 seconds to tell you why I called, and you tell me if it's relevant?
+    </div>
+    <div class="direction">[wait for yes]</div>
+
+    <div class="line">
+      I actually pulled up your Google listing before calling — you've got <span id="out-reviews" class="empty">[X]</span> reviews at <span id="out-rating" class="empty">[Y]</span> stars, last one was <span id="out-lastreview" class="empty">[Z]</span> ago, so people clearly love what you do.
+      <br><br>
+      But you're not showing up in the top 3 map results for "<span id="out-service" class="empty">[service]</span> near <span id="out-city" class="empty">[city]</span>" — <span id="out-competitor" class="empty">[competitor]</span> is ranking above you right now, and that's where 70% of the clicks go. Those are real customers going to them instead of you every day.
+      <br><br>
+      My company — Crestline Commerce — we fix exactly that to make your company more visible to customers in your area.
+    </div>
+
+    <div class="line">
+      Quick question — are you actively trying to grow through Google right now, or is most of your business word-of-mouth/repeat customers?
+    </div>
+    <div class="direction">[listen — this tells you if they're a fit and gets them talking]</div>
+
+    <div class="line">
+      I can show you exactly where you're losing ground and what fixing it looks like — free, no obligation. I've got time tomorrow at <span id="out-time" class="empty">[4 or 4:30]</span>. Which time works?
+    </div>
+
+    <h2>→ Voicemail</h2>
+    <div class="vm">
+      <div class="line">
+        "Hey <span id="out-name-vm" class="empty">[Name]</span>, this is Chris. I look at Google rankings for local service businesses, and noticed <span id="out-company-vm" class="empty">[company name]</span> isn't showing up in the top 3 for '<span id="out-service-vm" class="empty">[service]</span> near <span id="out-city-vm" class="empty">[city]</span>' — <span id="out-competitor-vm" class="empty">[competitor]</span> is ranking above you right now, and those top spots get about 70% of the clicks from people ready to hire.
+        <br><br>
+        I put together a free visibility report that shows exactly why and what's fixable — no pitch, just the data.
+        <br><br>
+        Call me back at 908-305-0779, or if it's easier, reply to my email and I'll send it right over. Talk soon."
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  const fields = [
+    { input: 'name', outputs: ['out-name', 'out-name-vm'], fallback: '[Name]' },
+    { input: 'company', outputs: ['out-company-vm'], fallback: '[company name]' },
+    { input: 'reviews', outputs: ['out-reviews'], fallback: '[X]' },
+    { input: 'rating', outputs: ['out-rating'], fallback: '[Y]' },
+    { input: 'lastreview', outputs: ['out-lastreview'], fallback: '[Z]' },
+    { input: 'service', outputs: ['out-service', 'out-service-vm'], fallback: '[service]' },
+    { input: 'city', outputs: ['out-city', 'out-city-vm'], fallback: '[city]' },
+    { input: 'competitor', outputs: ['out-competitor', 'out-competitor-vm'], fallback: '[competitor]' },
+    { input: 'time', outputs: ['out-time'], fallback: '[4 or 4:30]' },
+  ];
+
+  function updateScript() {
+    fields.forEach(f => {
+      const val = document.getElementById(f.input).value.trim();
+      f.outputs.forEach(outId => {
+        const out = document.getElementById(outId);
+        if (val) {
+          out.textContent = val;
+          out.className = 'filled';
+        } else {
+          out.textContent = f.fallback;
+          out.className = 'empty';
+        }
+      });
+    });
+    localStorage.setItem('crestline_call_script_data', JSON.stringify(
+      Object.fromEntries(fields.map(f => [f.input, document.getElementById(f.input).value]))
+    ));
+  }
+
+  function clearAll() {
+    fields.forEach(f => document.getElementById(f.input).value = '');
+    updateScript();
+  }
+
+  function loadSaved() {
+    const saved = localStorage.getItem('crestline_call_script_data');
+    if (saved) {
+      const data = JSON.parse(saved);
+      fields.forEach(f => {
+        if (data[f.input]) document.getElementById(f.input).value = data[f.input];
+      });
+    }
+  }
+
+  fields.forEach(f => {
+    document.getElementById(f.input).addEventListener('input', updateScript);
+  });
+
+  loadSaved();
+  updateScript();
+</script>
+
+
+
+</body></html>
